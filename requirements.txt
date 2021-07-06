@@ -1,0 +1,6 @@
+flask == 1.1.2
+requests == 2.25.1
+compress-json == 1.0.4
+pandas == 1.2.2
+enums == 0.0.2
+Distance == 0.1.3

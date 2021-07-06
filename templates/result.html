@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %} Search Page {% endblock %}
+
+
+{% block content %}
+ <form action ="#" method="post" style=" max-width: 2000px;margin: auto;align: center;">
+    <button type="submit" class="btn btn-outline-secondary btn-light" name="submit_button" value="new search"/>בצע חיפוש נוסף</button>
+     <button type="submit" class="btn btn-outline-secondary btn-light" name="submit_button" value="sort"/>מיין לפי תאריך</button>
+
+</form>
+
+<br>
+ {% if count < result_len %}
+<p>מציג {{count}}/{{result_len}} תוצאות</p>
+           {% endif %}
+          {% if count >= result_len %}
+                <p>מציג {{result_len}}/{{result_len}} תוצאות</p>
+           {% endif %}
+
+<p><button onclick="exportTableToCSV('results.csv')">שמור תוצאות כקובץ CSV</button></p>
+
+<table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+      <th scope="col">כותרת סעיף</th>
+      <th scope="col">שם החוק</th>
+        <th scope="col">תאריך</th>
+      <th scope="col">תוכן</th>
+    </tr>
+  </thead>
+{% for point in results %}
+        <tr>
+    <td>{{point["point headline"]}}</td>
+        <td>{{point["law name"]}}
+            <br>
+        <a href={{point['link']}} target="_blank">קישור לחוק בספר החוקים</a>
+        </td>
+             {% if point["date"] == "0" %}
+            <td>--</td>
+           {% endif %}
+            {% if point["date"] != "0" %}
+            <td>{{point["date"]}}</td>
+           {% endif %}
+            <td>
+                {% if point["short"] == False%}
+                <span id ="before_{{point['index']}}" style="display: block;">
+                {{point["content"][0]}}
+                <br>
+                {{point["content"][1]}}
+                <br>
+                {{point["content"][2]}}
+                </span>
+                <span id="dots_{{point['index']}}">...</span>
+                <span id="more_{{point['index']}}" style="display: none;">
+                {% for line in point["content"] %}
+                {{line}}
+                <br>
+                {% endfor %}
+                </span>
+
+                <button onclick="myFunction({{point['index']}})" id="myBtn_{{point['index']}}" class="btn btn-outline-secondary btn-light" style="width: 80px; height:35px; font-size:12px; padding: 0px; margin-right:800px;margin-top: 10px">קרא עוד</button>
+                {% endif %}
+                {% if point["short"] == True %}
+                {% for line in point["content"] %}
+                {{line}}
+                <br>
+                {% endfor %}
+                {% endif %}
+            </td>
+ </tr>
+        {% endfor %}
+
+</table>
+<form action ="#" method="post" style="max-width: 2000px;margin: auto; align: center;">
+    <button type="submit" class="btn btn-outline-secondary btn-light" name="submit_button" value="load more"/>טען תוצאות נוספות</button>
+</form>
+{% endblock %}

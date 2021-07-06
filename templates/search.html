@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %} {% endblock %}
+
+
+{% block content %}
+<form action ="#" method="post" dir="rtl" style=" max-width: 1000px;margin: auto; align: center;">
+    <div id="loading"></div>
+<div id="content">
+    <label for="search" class="form-label">הכנס מילת חיפוש:</label>
+    <p><input type="text" class="form-control" id = "search" name="search bar"/></p>
+    <button type="submit" class="btn btn-outline-secondary btn-light" value="שלח" onclick="loading();"/>שלח</button>
+</div>
+</form>
+
+{% endblock %}

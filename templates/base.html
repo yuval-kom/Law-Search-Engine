@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+    body{
+         max-width: 2000px;
+         margin: auto;
+         direction: rtl;
+         text-align: center;
+         background-color: #aad5f2;
+        }
+    h1{
+        text-align: center;
+        }
+    table{
+        text-align: right;
+        background-color: white;
+    }
+
+    div#loading {
+        width: 35px;
+        height: 35px;
+        display: none;
+        background: url(/static/loading.gif) no-repeat;
+        cursor: wait;
+        margin-left: auto;
+        margin-right: auto;
+     }
+
+    </style>
+    <script type="text/javascript">// <![CDATA[
+        function myFunction(index) {
+          var dots = document.getElementById("dots_"+index);
+          var moreText = document.getElementById("more_"+index);
+          var before = document.getElementById("before_"+index);
+          var btnText = document.getElementById("myBtn_"+index);
+
+          if (dots.style.display === "none") {
+            dots.style.display = "inline";
+            btnText.innerHTML = "קרא עוד";
+            moreText.style.display = "none";
+            before.style.display = "block";
+          } else {
+            dots.style.display = "none";
+            before.style.display = "none";
+            btnText.innerHTML = "קרא פחות";
+            moreText.style.display = "inline";
+          }
+        }
+
+        function loading(){
+            document.getElementById("loading").style.display = "block";
+            document.getElementById("content").style.display = "none";
+        }
+
+
+        function downloadCSV(csv, filename) {
+            var csvFile;
+            var downloadLink;
+
+            // CSV file
+            csvFile = new Blob(["\uFEFF"+csv], {type: "text/csv;charset=utf-8;"});
+
+            // Download link
+            downloadLink = document.createElement("a");
+
+            // File name
+            downloadLink.download = filename;
+
+            // Create a link to the file
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+
+            // Hide download link
+            downloadLink.style.display = "none";
+
+            // Add the link to DOM
+            document.body.appendChild(downloadLink);
+
+            // Click download link
+            downloadLink.click();
+        }
+
+        function exportTableToCSV(filename) {
+            var csv = [];
+            var rows = document.querySelectorAll("table tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var row = [], cols = rows[i].querySelectorAll("td, th");
+
+                for (var j = 0; j < cols.length; j++)
+                    row.push(cols[j].innerText);
+
+                csv.push(row.join(","));
+            }
+
+            // Download CSV file
+            downloadCSV(csv.join("\n"), filename);
+        }
+
+// ]]></script>
+</head>
+<body>
+    <h1>מנוע חיפוש לכותרות צד בחקיקה</h1>
+      <div class="card" style="background-color: #aad5f2;">
+  <div class="card-body">
+    {% block content %}
+    {% endblock %}
+ </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
