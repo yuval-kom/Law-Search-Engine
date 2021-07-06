@@ -1,5 +1,6 @@
 # Law project
-project by Efrat Eitani and Yuval Komash
+project by Yuval Komash and Efrat Eitani
+using YAP-WRAPPER from https://github.com/amit-shkolnik/YAP-Wrapper
 
 ### Compiling and running YAP 
  
